@@ -72,7 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       srv.vm.box = ENV['BASE_IMAGE'] ? (ENV['BASE_IMAGE']).to_s : server['box']
       hostname = name.split('-').drop(1).join('-')# First part contains type of node
-      srv.vm.hostname = "#{hostname}.example.com"
+      srv.vm.hostname = "#{hostname}.ictvangemert.nl"
       srv.vm.network 'private_network', ip: server['public_ip']
       srv.vm.network 'private_network', ip: server['private_ip'], virtualbox__intnet: true
       srv.vm.synced_folder '.', '/vagrant', type: :virtualbox
@@ -87,9 +87,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           run_remote <<-EOD
 cat > /etc/hosts<< "EOF"
 127.0.0.1 localhost.localdomain localhost4 localhost4.localdomain4
-192.168.253.10 master.example.com puppet master
+192.168.253.10 master.ictvangemert.nl puppet master
 172.17.1.23 ad.vs.ccloud.vs.lan
-#{server['public_ip']} #{hostname}.example.com #{hostname}
+#{server['public_ip']} #{hostname}.ictvangemert.nl #{hostname}
 EOF
 EOD
           run_remote  "bash /vagrant/scripts/setup_ssh-knownhosts.sh"
@@ -111,7 +111,7 @@ EOD
         # For this vagrant setup, we make sure all nodes in the domain examples.com are autosigned. In production
         # you'dd want to explicitly confirm every node.
         #
-        srv.vm.provision :shell, inline: "echo '*.example.com' > /etc/puppetlabs/puppet/autosign.conf"
+        srv.vm.provision :shell, inline: "echo '*.ictvangemert.nl' > /etc/puppetlabs/puppet/autosign.conf"
         #
         # For now we stop the firewall. In the future we will add a nice puppet setup to the ports needed
         # for Puppet Enterprise to work correctly.
@@ -141,11 +141,11 @@ EOD
           run_remote <<-EOD
 cat > /etc/hosts<< "EOF"
 127.0.0.1 localhost.localdomain localhost4 localhost4.localdomain4
-192.168.253.10 master.example.com puppet master
-#{server['public_ip']} #{hostname}.example.com #{hostname}
+192.168.253.10 master.ictvangemert.nl puppet master
+#{server['public_ip']} #{hostname}.ictvangemert.nl #{hostname}
 EOF
 EOD
-          run_remote 'curl -k https://master.example.com:8140/packages/current/install.bash | sudo bash'
+          run_remote 'curl -k https://master.ictvangemert.nl:8140/packages/current/install.bash | sudo bash'
           #
           # The agent installation also automatically start's it. In production, this is what you want. For now we
           # want the first run to be interactive, so we see the output. Therefore, we stop the agent and wait

@@ -1,2 +1,3 @@
 ---
+deployment_zone: 'ictvangemert.nl'
 software_location: &software_location                   	puppet:///modules/software

@@ -1,2 +1,2 @@
-deployment_zone: ictvangemert
-role: sg_role::wp_server
+deployment_zone: ictvangemert.nl
+role: wp_role::wp_server
