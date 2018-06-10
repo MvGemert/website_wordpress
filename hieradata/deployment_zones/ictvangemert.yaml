@@ -1,0 +1,7 @@
+vs_profile::manage_firewalld:   true
+vs_profile::base::hosts::list:
+  ml-wpserver:
+    ip: 192.168.253.50
+    host_aliases:
+      - wpserver
+      - wordpressserver
